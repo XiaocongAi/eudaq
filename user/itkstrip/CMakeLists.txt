@@ -1,7 +1,7 @@
 get_filename_component(EUDAQ_USERNAME ${CMAKE_CURRENT_LIST_DIR} NAME)
 set(EUDAQ_MODULE module_${EUDAQ_USERNAME})
 
-option(USER_ITKSTRIP_BUILD "build user/itkstrip" OFF)
+option(USER_ITKSTRIP_BUILD "build user/itkstrip" ON)
 
 if(NOT USER_ITKSTRIP_BUILD)
   message(STATUS "user/itkstrip is NOT to be built (USER_ITKSTRIP_BUILD=OFF)")

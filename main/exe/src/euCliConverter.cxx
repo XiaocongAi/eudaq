@@ -2,6 +2,8 @@
 #include "eudaq/DataConverter.hh"
 #include "eudaq/FileWriter.hh"
 #include "eudaq/FileReader.hh"
+#include "eudaq/StdEventConverter.hh"
+
 #include <iostream>
 
 int main(int /*argc*/, const char **argv) {
@@ -44,6 +46,34 @@ int main(int /*argc*/, const char **argv) {
     auto ev = reader->GetNextEvent();
     if(!ev)
       break;
+
+    auto stdev = eudaq::StandardEvent::MakeShared();
+    eudaq::StdEventConverter::Convert(ev, stdev, nullptr); //no conf
+    size_t hits_num_jade = 0;
+    size_t hits_num_m26 = 0;
+    size_t num = stdev->NumPlanes();
+    bool nohit = false;
+    for (unsigned int i = 0; i < num;i++){
+      const eudaq::StandardPlane & plane = stdev->GetPlane(i);
+      if(plane.Sensor() == "Jade"){
+	hits_num_jade += plane.HitPixels();
+      }
+      if(plane.Sensor() == "MIMOSA26"){
+	hits_num_m26 =plane.HitPixels();
+        if(hits_num_m26 == 0) nohit=true;
+        //std::cout<<"hit m26 is "<<hits_num_m26<<std::endl;
+      }
+    }
+
+    if(!hits_num_jade){
+      continue;
+    }
+
+    if(nohit) continue;
+
+    if(ev->GetEventN()%10000==0)
+      ev->Print(std::cout);
+
     if(print_ev_in)
       ev->Print(std::cout);
     if(writer)

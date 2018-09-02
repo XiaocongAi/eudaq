@@ -122,11 +122,13 @@ namespace eudaq{
       zsFrame= new TrackerDataImpl;
       zsDataEncoder.setCellID(zsFrame);
 
-      for(int i=0; i<  plane.HitPixels() ; i++) {	  
+      for(int i=0; i<  plane.HitPixels() ; i++) {
+        //if( (plane.ID()!=0 && plane.GetX(i)>900 && plane.GetX(i)<1100 && plane.GetY(i)>520 && plane.GetY(i)<580) || (plane.ID()==0 && plane.GetX(i)>900 && plane.GetX(i)<970 && plane.GetY(i)>520 && plane.GetY(i)<570) ){	  
 	zsFrame->chargeValues().push_back(plane.GetX(i));
 	zsFrame->chargeValues().push_back(plane.GetY(i));
 	zsFrame->chargeValues().push_back(1);
 	zsFrame->chargeValues().push_back(0);
+       // }
       }
       zsDataCollection->push_back( zsFrame);
 

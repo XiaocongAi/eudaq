@@ -79,8 +79,8 @@ Converting(eudaq::EventSPC d1, eudaq::LCEventSP d2, eudaq::ConfigurationSPC conf
     int sensorID  = chip + chip_id_offset + first_sensor_id;
 
     lcio::TrackerDataImpl *zsFrame = new lcio::TrackerDataImpl;
-
-    zsDataEncoder["sensorID"] = sensorID;
+    zsDataEncoder["sensorID"] = 7;
+    //zsDataEncoder["sensorID"] = sensorID;
     zsDataEncoder["sparsePixelType"] = 2;//eutelescope::kEUTelGenericSparsePixel
     zsDataEncoder.setCellID(zsFrame);
 

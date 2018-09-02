@@ -38,6 +38,7 @@ bool ItsAbcRawEvent2LCEventConverter::Converting(eudaq::EventSPC d1, eudaq::LCEv
   }
   auto block_n_list = raw->GetBlockNumList();
   for(auto &block_n: block_n_list){
+    if(block_n + PLANE_ID_OFFSET_ABC>33) continue;
     std::vector<uint8_t> block = raw->GetBlock(block_n);
     std::vector<bool> channels;
     eudaq::uchar2bool(block.data(), block.data() + block.size(), channels);
